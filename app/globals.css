@@ -1,39 +1,81 @@
 @import "tailwindcss";
 
-html, body {
+:root {
+  /* Dewdrop Den palette */
+  --ddd-navy: #003d76;
+  --ddd-teal: #1d6674;
+  --ddd-blue: #47a3b4;
+  --ddd-green: #96d3aa;
+  --ddd-pink: #ffb8d1;
+  --ddd-blush: #efd3d8;
+  --ddd-cream: #fffff2;
+  --ddd-sky: #e5fbff;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
+  background-color: #e5fbff;
 }
 
-.container {
-  width: 100%;
-  min-height: 100vh;
-  background-color: yellow;
-  outline: 3px solid red;
+/* Coming-soon page: small logo centred at the top, GIF centred on the screen. */
+.coming-soon {
+  --pad: clamp(12px, 3vmin, 28px);
+  /* Logo is about a sixth of a desktop screen, and never tiny on phones. */
+  --logo-width: clamp(170px, 20vw, 340px);
+  /* The logo box is 10:3, so its height is 30% of its width. */
+  --header-height: calc(var(--logo-width) * 0.3 + 2 * var(--pad));
+
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: grid;
+  /* Header on top and an empty row of the same height at the bottom, so the
+     middle row (the GIF) sits in the exact centre of the screen. */
+  grid-template-rows: var(--header-height) 1fr var(--header-height);
+  background-color: #e5fbff;
 }
 
-nav {
-  width: 100%;
-  display: flex;
-}
-
-nav ul {
+.site-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0;
-  padding: 0 20px;
-  list-style: none;
+  justify-content: center;
+  padding: var(--pad);
+  box-sizing: border-box;
 }
 
-nav img {
+/* The logo file is a square with empty space above and below the artwork,
+   so show only the middle band of it. */
+.logo {
+  width: var(--logo-width);
+  aspect-ratio: 10 / 3;
+  overflow: hidden;
+}
+
+.logo img {
   display: block;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.search-icon {
-  height: 100;
-  width: 100;
+.coming-soon-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--pad);
+}
+
+/* The GIF is square. It is as wide as the screen allows and as tall as the
+   space between the header and the matching empty row at the bottom, never
+   above 640px and never below 200px. */
+.coming-soon-gif {
+  display: block;
+  width: max(
+    200px,
+    min(100vw - 2 * var(--pad), 100dvh - 2 * var(--header-height), 640px)
+  );
+  height: auto;
+  aspect-ratio: 1 / 1;
 }
